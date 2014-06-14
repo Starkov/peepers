@@ -8,10 +8,7 @@ import ru.artezio.dao.CardDAO;
 import ru.artezio.entity.Card;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -56,6 +53,14 @@ public class CardResource {
 
         }
         return result;
+    }
+
+    @POST
+    @Path("/add")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void add(Card card){
+        card.setUser("tomcat");
+        dao.save(card);
     }
 
 }

@@ -8,6 +8,15 @@ public class Card {
     private int id;
     private String phrase;
     private String translation;
+    private String user;
+    @Column(name = "user_id", nullable = false)
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 
     @Id
     @Column(name="idcard")
@@ -20,7 +29,7 @@ public class Card {
         this.id = id;
     }
 
-    @Column(name = "phrases",nullable = false)
+    @Column(name = "phrase",nullable = false)
     public String getPhrase() {
         return phrase;
     }
@@ -29,7 +38,7 @@ public class Card {
         this.phrase = phrase;
     }
 
-    @Column(name = "translations",nullable = false)
+    @Column(name = "translation",nullable = false)
     public String getTranslation() {
         return translation;
     }
