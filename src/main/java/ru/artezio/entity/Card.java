@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "cards")
 public class Card {
-    private int id;
+    private Integer id;
     private String phrase;
     private String translation;
     private String user;
@@ -20,12 +20,12 @@ public class Card {
 
     @Id
     @Column(name="idcard")
-    @GeneratedValue
-    public int getId() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

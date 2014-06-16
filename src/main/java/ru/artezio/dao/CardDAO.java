@@ -7,8 +7,8 @@ import java.util.List;
 
 @Transactional
 public interface CardDAO {
-    Card load(int id);
+    Card load(Integer id);
     void save(Card c);
-    void remove(int id);
+    void remove(Integer id);
     List<Card> loadAll();
 }

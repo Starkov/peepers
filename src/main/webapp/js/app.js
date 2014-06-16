@@ -6,19 +6,10 @@ var peepersApp = angular.module('peepersApp', [
 peepersApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
-            when('/cards', {
-                templateUrl: 'card-list.html',
-                controller: 'CardListCtrl'
+            when('/cards',
+            {
+                templateUrl: 'cards.html',
+                controller: 'CardsCtrl'
             }).
-            when('/cards/:cardId', {
-                templateUrl: 'card-detail.html',
-                controller: 'CardDetailCtrl'
-            }).
-            when('/cards/add', {
-                templateUrl: 'card-form.html',
-                controller: 'CardFormCtrl'
-            }).
-            otherwise({
-                redirectTo: '/cards'
-            });
+            otherwise({redirectTo: '/cards'});
     }]);

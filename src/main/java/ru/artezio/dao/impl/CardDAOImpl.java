@@ -17,7 +17,7 @@ public class CardDAOImpl implements CardDAO {
 
 
     @Override
-    public Card load(int id) {
+    public Card load(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         return (Card) session.get(Card.class, id);
     }
@@ -29,7 +29,7 @@ public class CardDAOImpl implements CardDAO {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(id);
     }
