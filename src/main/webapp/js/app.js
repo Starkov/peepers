@@ -1,6 +1,7 @@
 var peepersApp = angular.module('peepersApp', [
     'ngRoute',
-    'peepersControllers'
+    'peepersControllers',
+    'ui.bootstrap'
 ]);
 
 peepersApp.config(['$routeProvider',
@@ -8,8 +9,7 @@ peepersApp.config(['$routeProvider',
         $routeProvider.
             when('/cards',
             {
-                templateUrl: 'cards.html',
-                controller: 'CardsCtrl'
+                templateUrl: 'cards.html'
             }).
             otherwise({redirectTo: '/cards'});
     }]);

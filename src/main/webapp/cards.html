@@ -1,28 +1,33 @@
-<!-- Button trigger modal -->
-
+<!--Sidebar-->
 <div id="wrapper">
-
     <div id="sidebar-wrapper">
-
-        <div class="sidebar-nav ">
+        <div class="sidebar-nav " ng-controller="CardsCtrl">
             </br>
             <div ng-repeat="card in cards">
-                <div class="alert alert-success"> {{card.phrase}} - {{card.translation}}</div>
+                <div class="thumbnail"> {{card.phrase}}</div>
             </div>
-
         </div>
-        <div  >
+        <div>
             <button id="sidebar-bottom" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#addCard">
                 Add
             </button>
         </div>
-
     </div>
 </div>
-<div class="alert alert-success col-md-offset-3 col-md-9">
-    qweqwe
+<!--End sidebar-->
+<!--Carousel-->
+<div ng-controller="CardsSidebarCtrl">
+    <carousel>
+        <slide ng-repeat="c in cardsSlide" active="c.active">
+            <div class="thumbnail">
+                </br></br></br>
+                <center><h1>{{c.phrase}}</h1></center>
+                </br></br></br>
+            </div>
+        </slide>
+    </carousel>
 </div>
-
+<!--End carousel-->
 
 <!-- Modal -->
 <div class="modal fade" id="addCard" tabindex="-1" role="dialog" aria-labelledby="addCardLabel" aria-hidden="true">
@@ -52,6 +57,6 @@
                 </div>
             </form>
         </div>
-
     </div>
 </div>
+<!-- End modal -->

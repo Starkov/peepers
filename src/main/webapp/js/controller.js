@@ -20,3 +20,10 @@ peepersControllers.controller('CardFormCtrl', function($scope, $http, $location)
     }
 
 });
+
+peepersControllers.controller('CardsSidebarCtrl', function($scope, $http) {
+    $http({method: 'GET', url: 'rest/cards/all'}).success(function(data)
+    {
+        $scope.cardsSlide = data;
+    });
+});
