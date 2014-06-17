@@ -1,62 +1,76 @@
-<!--Sidebar-->
-<div id="wrapper">
-    <div id="sidebar-wrapper">
-        <div class="sidebar-nav " ng-controller="CardsCtrl">
-            </br>
-            <div ng-repeat="card in cards">
-                <div class="thumbnail"> {{card.phrase}}</div>
-            </div>
-        </div>
-        <div>
-            <button id="sidebar-bottom" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#addCard">
-                Add
-            </button>
-        </div>
-    </div>
-</div>
-<!--End sidebar-->
-<!--Carousel-->
-<div ng-controller="CardsSidebarCtrl">
-    <carousel>
-        <slide ng-repeat="c in cardsSlide" active="c.active">
-            <div class="thumbnail">
-                </br></br></br>
-                <center><h1>{{c.phrase}}</h1></center>
-                </br></br></br>
-            </div>
-        </slide>
-    </carousel>
-</div>
-<!--End carousel-->
+<div ng-controller="CardCtrl">
+    <!--Sidebar-->
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <div class="sidebar-nav ">
 
-<!-- Modal -->
-<div class="modal fade" id="addCard" tabindex="-1" role="dialog" aria-labelledby="addCardLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form ng-controller="CardFormCtrl" role="form">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="addCardLabel">Add new card</h4>
+                <div ng-repeat="card in cards">
+                    <div class="thumbnail" style="word-wrap: break-word "> {{card.phrase}}</div>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="inputPhrase">Phrase:</label>
-                        <input type="text" class="form-control" id="inputPhrase" placeholder="Enter phrase"
-                               ng-model="card.phrase">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputTranslate">Translate:</label>
-                        <input type="text" class="form-control" id="inputTranslate" placeholder="Enter translate"
-                               ng-model="card.translation">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="update(card)">Save
-                    </button>
-                    <!--<button type="button" class="btn btn-primary">Save changes</button>-->
-                </div>
-            </form>
+            </div>
+            <div>
+                <button id="sidebar-bottom" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#addCard">
+                    Add
+                </button>
+            </div>
         </div>
     </div>
+    <!--End sidebar-->
+    <!--Carousel-->
+    <div class="row">
+
+        <div class="col-md-offset-3 col-md-9">
+            <carousel>
+                <slide ng-repeat="card in cards" active="card.active">
+                    <div class="row">
+                        <button class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#addCard"
+                                ng-click="edit(card)">
+                            edit
+                        </button>
+                    </div>
+                    <div class="row">
+                        <div class="thumbnail">
+                            </br></br></br>
+                            <center><h1 style="word-wrap: break-word ">{{card.phrase}}</h1></center>
+                            </br></br></br>
+                        </div>
+                    </div>
+                </slide>
+            </carousel>
+        </div>
+    </div>
+    <!--End carousel-->
+
+    <!-- Modal ADD a Card -->
+    <div class="modal fade" id="addCard" tabindex="-1" role="dialog" aria-labelledby="addCardLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form role="form">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="addCardLabel">Add new card</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="inputPhrase">Phrase:</label>
+                            <input type="text" class="form-control" id="inputPhrase"
+                                   ng-model="card.phrase">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTranslate">Translate:</label>
+                            <input type="text" class="form-control" id="inputTranslate"
+
+                                   ng-model="card.translation">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="update(card)">Save
+                        </button>
+                        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End modal ADD a Card-->
 </div>
-<!-- End modal -->

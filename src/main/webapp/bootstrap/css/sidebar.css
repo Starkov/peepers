@@ -6,15 +6,15 @@
 
 #sidebar-bottom {
     position: absolute;
-    top: 820px;
+    top: 700px;
     width: 210px;
     margin: 10px;
 }
 
 #sidebar-wrapper {
-    margin-left: -250px;
-    left: 250px;
-    width: 280px;
+    /*margin-left: -250px;*/
+    /*left: 250px;*/
+    /*width: 280px;*/
     /*background: #000;*/
     position: fixed;
 
@@ -34,7 +34,7 @@
     margin: 0;
     padding-left: 10px;
     padding-right: 10px;
-    height: 800px;
+    height: 680px;
     overflow-y: auto;
 }
 

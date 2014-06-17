@@ -31,7 +31,7 @@ public class CardResource {
     @POST
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void add(Card card){
+    public void add(Card card) {
         card.setUser("tomcat"); //todo Keep this to a user
         dao.save(card);
     }
@@ -40,6 +40,9 @@ public class CardResource {
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Card> getAll(@Context HttpServletRequest request) {
+        for (int i = 0; i < 256; i++) {
+            System.out.print(1);
+        }
         List<Card> result = null;
         try {
             result = dao.loadAll();
@@ -51,14 +54,14 @@ public class CardResource {
 
     @GET
     @Path("/{id:\\d+}")
-    @Produces( MediaType.APPLICATION_JSON )
-    public Card getById( @PathParam("id") Integer id){
+    @Produces(MediaType.APPLICATION_JSON)
+    public Card getById(@PathParam("id") Integer id) {
         return dao.load(id);
     }
 
     @DELETE
     @Path("/remove/{id:\\d+}")
-    public void remove(@PathParam("id") Integer id){
+    public void remove(@PathParam("id") Integer id) {
         dao.remove(id);
     }
 
