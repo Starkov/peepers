@@ -20,18 +20,30 @@
     <div class="row">
 
         <div class="col-md-offset-3 col-md-9">
-            <carousel>
-                <slide ng-repeat="card in cards" active="card.active">
+            <carousel >
+                <slide ng-repeat="card in cards" active="card.active" >
                     <div class="row">
+
                         <button class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#addCard"
-                                ng-click="edit(card)">
-                            edit
+                                ng-click="edit(card)"> edit
                         </button>
+                        <button class="glyphicon glyphicon-refresh" ng-click="flip = !flip"> flip</button>
                     </div>
-                    <div class="row">
-                        <div class="thumbnail">
+
+                    <div class="row col-md-8 col-lg-offset-2">
+                        <div ng-show="!flip">
                             </br></br></br>
-                            <center><h1 style="word-wrap: break-word ">{{card.phrase}}</h1></center>
+                            <center>
+                                <h1 style="word-wrap: break-word ">{{card.phrase}}</h1>
+                            </center>
+                            </br></br></br>
+                        </div>
+
+                        <div ng-show="flip">
+                            </br></br></br>
+                            <center>
+                                <h1 style="word-wrap: break-word ">{{card.translation}}</h1>
+                            </center>
                             </br></br></br>
                         </div>
                     </div>
