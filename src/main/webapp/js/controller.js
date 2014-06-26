@@ -22,6 +22,9 @@ peepersControllers.controller('CardCtrl', function ($scope, $http, $location) {
     $scope.edit = function (editCard) {
         $scope.card = editCard;
     }
+    $scope.clear = function () {
+        delete $scope.card;
+    }
 
     $scope.removeCard = function (card) {
         $http({method: 'DELETE', url: 'rest/cards/remove/'+card.id}).success(function (data) {
@@ -30,13 +33,3 @@ peepersControllers.controller('CardCtrl', function ($scope, $http, $location) {
     }
 });
 
-peepersControllers.controller('CardsSlidebarCtrl', function ($scope, $http) {
-    $http({method: 'GET', url: 'rest/cards/all'}).success(function (data) {
-        $scope.cardsSlide = data;
-    });
-});
-peepersControllers.controller('CardEditCtrl', function ($scope, $http) {
-    $http({method: 'GET', url: 'rest/cards/all'}).success(function (data) {
-        $scope.cardsSlide = data;
-    });
-});

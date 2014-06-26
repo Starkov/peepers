@@ -4,13 +4,14 @@
         <div id="sidebar-wrapper">
             <div class="sidebar-nav ">
 
-                <div ng-repeat="card in cards">
-                    <div class="thumbnail" style="word-wrap: break-word "> {{card.phrase}}</div>
+                <div ng-repeat="sidebarCard in cards">
+                    <div class="thumbnail" style="word-wrap: break-word "> {{sidebarCard.phrase}}</div>
                 </div>
             </div>
             <div>
-                <button id="sidebar-bottom" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#addCard">
-                    Add
+                <button id="sidebar-bottom" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#addCard"
+                        ng-click="add()">
+                Add
                 </button>
             </div>
         </div>
@@ -21,13 +22,13 @@
 
         <div class="col-md-offset-3 col-md-9">
             <carousel >
-                <slide ng-repeat="card in cards" active="card.active" >
+                <slide ng-repeat="carouselCard in cards" active="carouselCard.active">
                     <div class="row">
 
                         <button class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#addCard"
-                                ng-click="edit(card)"> edit
+                                ng-click="edit(carouselCard)"> edit
                         </button>
-                        <button class="glyphicon glyphicon-remove" ng-click="removeCard(card)"> remove</button>
+                        <button class="glyphicon glyphicon-remove" ng-click="removeCard(carouselCard)"> remove</button>
                         <button class="glyphicon glyphicon-refresh" ng-click="flip = !flip"> flip</button>
                     </div>
 
@@ -35,7 +36,7 @@
                         <div ng-show="!flip">
                             </br></br></br>
                             <center>
-                                <h1 style="word-wrap: break-word ">{{card.phrase}}</h1>
+                                <h1 style="word-wrap: break-word ">{{carouselCard.phrase}}</h1>
                             </center>
                             </br></br></br>
                         </div>
@@ -43,7 +44,7 @@
                         <div ng-show="flip">
                             </br></br></br>
                             <center>
-                                <h1 style="word-wrap: break-word ">{{card.translation}}</h1>
+                                <h1 style="word-wrap: break-word ">{{carouselCard.translation}}</h1>
                             </center>
                             </br></br></br>
                         </div>
@@ -60,7 +61,8 @@
             <div class="modal-content">
                 <form role="form">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <button type="button" ng-click="clear()" class="close" data-dismiss="modal"
+                                aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="addCardLabel">Add new card</h4>
                     </div>
                     <div class="modal-body">
