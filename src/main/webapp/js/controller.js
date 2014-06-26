@@ -7,11 +7,12 @@ var peepersControllers = angular.module('peepersControllers', []);
 
 peepersControllers.controller('CardCtrl', function ($scope, $http, $location) {
 
+
     $http({method: 'GET', url: 'rest/cards/all'}).success(function (data) {
         $scope.cards = data; // response data
     });
     $scope.update = function (card) {
-        if('active' in card){
+        if ('active' in card) {
             delete card.active;
         }
         $http({method: 'POST', url: 'rest/cards/add', data: card}).success(function (data) {
@@ -20,6 +21,12 @@ peepersControllers.controller('CardCtrl', function ($scope, $http, $location) {
     }
     $scope.edit = function (editCard) {
         $scope.card = editCard;
+    }
+
+    $scope.removeCard = function (card) {
+        $http({method: 'DELETE', url: 'rest/cards/remove/'+card.id}).success(function (data) {
+            $location.path('/cars')
+        });
     }
 });
 
