@@ -1,28 +1,30 @@
 package ru.artezio.rest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-import ru.artezio.CardMock;
+
 import ru.artezio.dao.CardDAO;
 import ru.artezio.entity.Card;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
  * Created by astarkov on 13.06.2014.
  */
 
-@Component
-@Scope("prototype")
+@ApplicationScoped
 @Path("/cards")
+
 public class CardResource {
 
-    @Autowired
+    @EJB
     private CardDAO dao;
 
     /**
@@ -39,18 +41,12 @@ public class CardResource {
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Card> getAll(@Context HttpServletRequest request) {
-        for (int i = 0; i < 256; i++) {
-            System.out.print(1);
-        }
-        List<Card> result = null;
-        try {
-            result = dao.loadAll();
-        } catch (Exception e) {
+    public List<Card>  getAll() {
 
-        }
+        List<Card> result = dao.loadAll();
         return result;
     }
+
 
     @GET
     @Path("/{id:\\d+}")

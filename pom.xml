@@ -1,178 +1,96 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>ru.artezio</groupId>
-  <artifactId>artezio</artifactId>
-  <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>artezio Maven Webapp</name>
-  <url>http://maven.apache.org</url>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ru.artezio</groupId>
+    <artifactId>artezio</artifactId>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>Peepers</name>
+
     <properties>
         <encoding>UTF-8</encoding>
 
-        <java.version>1.6</java.version>
-
+        <java.version>1.7</java.version>
+        <servlet-api.version>2.5</servlet-api.version>
         <jersey.version>1.13</jersey.version>
-
-        <spring.version>3.1.1.RELEASE</spring.version>
-
-        <hibernate-core.version>3.3.2.GA</hibernate-core.version>
-        <hibernate-annotations.version>3.4.0.GA</hibernate-annotations.version>
-        <persistence-api.version>1.0</persistence-api.version>
-        <javassist.version>3.12.1.GA</javassist.version>
-        <c3p0.version>0.9.1.2</c3p0.version>
-
+        <version.resteasy>3.0.8</version.resteasy>
         <slf4j.version>1.6.4</slf4j.version>
         <log4j.version>1.2.16</log4j.version>
         <commons.collections.version>3.2.1</commons.collections.version>
 
-        <servlet-api.version>2.5</servlet-api.version>
-
         <junit.version>4.8.2</junit.version>
 
+        <!-- Explicitly declaring the source encoding eliminates the following message: -->
+        <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered
+            resources, i.e. build is platform dependent! -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- JBoss dependency versions -->
+
+        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+
+        <!-- Define the version of the JBoss BOMs we want to import to specify tested stacks. -->
+        <version.jboss.bom>8.0.0.Final</version.jboss.bom>
+
+        <version.wildfly>8.1.0.Final</version.wildfly>
+
+        <!-- other plugin versions -->
+        <version.compiler.plugin>3.1</version.compiler.plugin>
+        <version.war.plugin>2.1.1</version.war.plugin>
+
+        <!-- maven-compiler-plugin -->
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
     </properties>
 
 
     <dependencies>
 
-        <!-- @begin: Spring ================================================ -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${servlet-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- @begin: EJB ================================================ -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- @end: EJB ================================================== -->
+
+        <!-- @begin: RESTEasy ================================================ -->
+
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>3.0.8.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-multipart-provider</artifactId>
+            <version>3.0.8.Final</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>${spring.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- @end: Spring ================================================== -->
-
-
-        <!-- @begin: Hibernate ============================================= -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate-core.version}</version>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jackson-provider</artifactId>
+            <version>3.0.8.Final</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
-            <version>${hibernate-annotations.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>${persistence-api.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>${javassist.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>c3p0</groupId>
-            <artifactId>c3p0</artifactId>
-            <version>${c3p0.version}</version>
-        </dependency>
-        <!-- @end: Hibernate =============================================== -->
-
-
-        <!-- database/jdbc -->
-        <!--<dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>${hsqldb.version}</version>
-        </dependency>-->
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.9</version>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20140107</version>
         </dependency>
 
-        <!-- @begin: Jersey ================================================ -->
-
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>${jersey.version}</version>
-        </dependency>
-
-        <!-- JSON support -->
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-            <version>${jersey.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-bundle</artifactId>
-            <version>${jersey.version}</version>
-        </dependency>
-
-        <!-- Spring Integration -->
-        <dependency>
-            <groupId>com.sun.jersey.contribs</groupId>
-            <artifactId>jersey-spring</artifactId>
-            <version>${jersey.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-beans</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-context</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-aop</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- @end: Jersey ================================================== -->
-
+        <!-- @end: RESTEasy ================================================== -->
 
         <!-- @begin: log ================================================== -->
         <dependency>
@@ -197,14 +115,6 @@
         </dependency>
         <!-- @end: log ===================================================== -->
 
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>${servlet-api.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- JUnit -->
         <dependency>
             <groupId>junit</groupId>
@@ -215,22 +125,38 @@
     </dependencies>
 
     <build>
+        <!-- Maven will append the version to the finalName (which is the
+                 name given to the generated war, and hence the context root) -->
         <finalName>${project.artifactId}</finalName>
-
         <plugins>
-
-            <!-- @begin: compile -->
+            <!-- Compiler plugin enforces Java 1.6 compatibility and activates
+                annotation processors -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.compiler.plugin}</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
-            <!-- @end: compile -->
-
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${version.war.plugin}</version>
+                <configuration>
+                    <!-- Java EE 7 doesn't require web.xml, Maven needs to
+                        catch up! -->
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <!-- The WildFly plugin deploys your war to a local WildFly
+                container -->
+            <!-- To use, set the JBOSS_HOME environment variable and run:
+                mvn package wildfly:deploy -->
+            <!--<plugin>-->
+            <!--<groupId>org.wildfly.plugins</groupId>-->
+            <!--<artifactId>wildfly-maven-plugin</artifactId>-->
+            <!--<version>${version.wildfly.maven.plugin}</version>-->
+            <!--</plugin>-->
         </plugins>
-
     </build>
 </project>

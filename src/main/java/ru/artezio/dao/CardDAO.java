@@ -1,8 +1,9 @@
 package ru.artezio.dao;
 
-import org.springframework.transaction.annotation.Transactional;
+
 import ru.artezio.entity.Card;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Transactional

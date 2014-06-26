@@ -1,42 +1,42 @@
 package ru.artezio.dao.impl;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import ru.artezio.dao.CardDAO;
 import ru.artezio.entity.Card;
 
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.List;
 
-@Repository
+@Stateless
 public class CardDAOImpl implements CardDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
-
+    @PersistenceContext(name = "card-unit")
+    private EntityManager em;
 
     @Override
     public Card load(Integer id) {
-        Session session = sessionFactory.getCurrentSession();
-        return (Card) session.get(Card.class, id);
+        return em.find(Card.class, id);
     }
 
     @Override
     public void save(Card c) {
-        Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(c);
+        em.merge(c);
     }
 
     @Override
     public void remove(Integer id) {
-        Session session = sessionFactory.getCurrentSession();
-        session.delete(id);
+        Card c = em.find(Card.class, id);
+        if (c != null) {
+            em.remove(c);
+        }
     }
 
     @Override
     public List<Card> loadAll() {
-        Session session = sessionFactory.getCurrentSession();
-        return (List<Card>)session.createCriteria(Card.class).list();
+        Query query = em.createQuery("SELECT c FROM Card c");
+        return (List<Card>) query.getResultList();
     }
 }
