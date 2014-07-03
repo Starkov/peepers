@@ -1,18 +1,14 @@
 package ru.artezio.rest;
 
 
+import org.jboss.resteasy.annotations.providers.jaxb.json.BadgerFish;
 import ru.artezio.dao.CardDAO;
-import ru.artezio.entity.Card;
+import ru.artezio.dao.UserDAO;
+import ru.artezio.entity.node.Card;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -21,44 +17,46 @@ import java.util.List;
 
 @ApplicationScoped
 @Path("/cards")
-
 public class CardResource {
 
+
     @EJB
-    private CardDAO dao;
+    private CardDAO nodeDao;
+    @EJB
+    private UserDAO userDAO;
 
     /**
      * This method is save or update an object
      */
     @POST
     @Path("/add")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes("application/json")
     public void add(Card card) {
-        card.setUser("tomcat"); //todo Keep this to a user
-        dao.save(card);
+        card.setLogin("tomcat"); //todo Keep this to a user
+        nodeDao.save(card);
     }
 
+    @BadgerFish
     @GET
     @Path("/all")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Card>  getAll() {
-
-        List<Card> result = dao.loadAll();
+    @Produces("application/json")
+    public List getAll() {
+        List result = nodeDao.loadAll("tomcat");
         return result;
     }
 
 
     @GET
     @Path("/{id:\\d+}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces("application/json")
     public Card getById(@PathParam("id") Integer id) {
-        return dao.load(id);
+        return (Card) nodeDao.load(id);
     }
 
     @DELETE
     @Path("/remove/{id:\\d+}")
     public void remove(@PathParam("id") Integer id) {
-        dao.remove(id);
+        nodeDao.remove(id);
     }
 
 }

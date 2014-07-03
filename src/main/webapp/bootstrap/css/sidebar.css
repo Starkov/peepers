@@ -4,6 +4,12 @@
 
 }
 
+#flip-bottom {
+
+    width: 210px;
+
+}
+
 #sidebar-bottom {
     position: absolute;
     top: 700px;
@@ -28,13 +34,13 @@
 
 .sidebar-nav {
     position: absolute;
-    top: 0;
+    top: 60;
     width: 250px;
     list-style: none;
     margin: 0;
     padding-left: 10px;
     padding-right: 10px;
-    height: 680px;
+    height: 630px;
     overflow-y: auto;
 }
 

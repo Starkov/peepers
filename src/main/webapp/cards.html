@@ -1,17 +1,27 @@
 <div ng-controller="CardCtrl">
+    <div class="col-md-3">
+        <button id="flip-bottom" class="btn btn-primary btn-lg " ng-click="flipAllCards()"> Flip</button>
+    </div>
     <!--Sidebar-->
     <div id="wrapper">
         <div id="sidebar-wrapper">
+
             <div class="sidebar-nav ">
 
-                <div ng-repeat="sidebarCard in cards">
-                    <div class="thumbnail" style="word-wrap: break-word "> {{sidebarCard.phrase}}</div>
+                <div ng-repeat="sidebarCard in cardList">
+                    <div>
+                        <div class="thumbnail" style="word-wrap: break-word " ng-show="!flipAll"> {{sidebarCard.phrase}}
+                        </div>
+                        <div class="thumbnail" style="word-wrap: break-word " ng-hide="!flipAll">
+                            {{sidebarCard.translation}}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div>
                 <button id="sidebar-bottom" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#addCard"
-                        ng-click="add()">
-                Add
+                        ng-click="initAddButton()">
+                    Add
                 </button>
             </div>
         </div>
@@ -21,19 +31,19 @@
     <div class="row">
 
         <div class="col-md-offset-3 col-md-9">
-            <carousel >
-                <slide ng-repeat="carouselCard in cards" active="carouselCard.active">
+            <carousel>
+                <slide ng-repeat="carouselCard in cardList" active="carouselCard.active">
                     <div class="row">
 
                         <button class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#addCard"
                                 ng-click="edit(carouselCard)"> edit
                         </button>
                         <button class="glyphicon glyphicon-remove" ng-click="removeCard(carouselCard)"> remove</button>
-                        <button class="glyphicon glyphicon-refresh" ng-click="flip = !flip"> flip</button>
                     </div>
 
-                    <div class="row col-md-8 col-lg-offset-2">
-                        <div ng-show="!flip">
+                    <div ng-mouseenter="flip=!flip" ng-mouseleave="flip=!flip" class="row col-md-8 col-lg-offset-2">
+                        <div ng-show="!(!flip!=!flipAll)">
+                            <!--(!flip!=!flipAll) this is XOR operator, like t (flip^flipAll)-->
                             </br></br></br>
                             <center>
                                 <h1 style="word-wrap: break-word ">{{carouselCard.phrase}}</h1>
@@ -41,7 +51,7 @@
                             </br></br></br>
                         </div>
 
-                        <div ng-show="flip">
+                        <div ng-hide="!(!flip!=!flipAll)">
                             </br></br></br>
                             <center>
                                 <h1 style="word-wrap: break-word ">{{carouselCard.translation}}</h1>
@@ -68,14 +78,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="inputPhrase">Phrase:</label>
-                            <input type="text" class="form-control" id="inputPhrase"
-                                   ng-model="card.phrase">
+                            <input type="text" class="form-control" id="inputPhrase" ng-model="card.phrase">
                         </div>
                         <div class="form-group">
                             <label for="inputTranslate">Translate:</label>
-                            <input type="text" class="form-control" id="inputTranslate"
-
-                                   ng-model="card.translation">
+                            <input type="text" class="form-control" id="inputTranslate" ng-model="card.translation">
                         </div>
                     </div>
                     <div class="modal-footer">

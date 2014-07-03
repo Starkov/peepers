@@ -1,29 +1,30 @@
 package ru.artezio.dao.impl;
 
 import ru.artezio.dao.CardDAO;
-import ru.artezio.entity.Card;
+import ru.artezio.entity.node.Card;
+import ru.artezio.entity.node.Node;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Stateless
 public class CardDAOImpl implements CardDAO {
 
-    @PersistenceContext(name = "card-unit")
+    @PersistenceContext
     private EntityManager em;
 
     @Override
-    public Card load(Integer id) {
+    public Node load(Integer id) {
         return em.find(Card.class, id);
     }
 
     @Override
-    public void save(Card c) {
-        em.merge(c);
+    public void save(Node c) {
+        em.persist(c);
+        em.flush();
     }
 
     @Override
@@ -35,8 +36,15 @@ public class CardDAOImpl implements CardDAO {
     }
 
     @Override
-    public List<Card> loadAll() {
+    public List<Node> loadAll() {
         Query query = em.createQuery("SELECT c FROM Card c");
-        return (List<Card>) query.getResultList();
+        return (List<Node>) query.getResultList();
+    }
+
+    @Override
+    public List<Node> loadAll(String login) {
+        Query query = em.createQuery("SELECT c FROM Card c WHERE c.login = :login");
+        query.setParameter("login",login);
+        return (List<Node>) query.getResultList();
     }
 }
