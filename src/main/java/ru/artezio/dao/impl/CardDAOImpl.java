@@ -44,7 +44,14 @@ public class CardDAOImpl implements CardDAO {
     @Override
     public List<Node> loadAll(String login) {
         Query query = em.createQuery("SELECT c FROM Card c WHERE c.login = :login");
-        query.setParameter("login",login);
+        query.setParameter("login", login);
+        return (List<Node>) query.getResultList();
+    }
+
+    @Override
+    public List<Node> loadCardTreeBy(String login) {
+        Query query = em.createQuery("SELECT n FROM Node n WHERE n.login = :login and n.folder is null");
+        query.setParameter("login", login);
         return (List<Node>) query.getResultList();
     }
 }

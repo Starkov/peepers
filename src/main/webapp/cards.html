@@ -10,7 +10,7 @@
 
                 <div ng-repeat="sidebarCard in cardList">
                     <div>
-                        <div class="thumbnail" style="word-wrap: break-word " ng-show="!flipAll"> {{sidebarCard.phrase}}
+                        <div class="thumbnail" style="word-wrap: break-word " ng-show="!flipAll"> {{sidebarCard.name}}
                         </div>
                         <div class="thumbnail" style="word-wrap: break-word " ng-hide="!flipAll">
                             {{sidebarCard.translation}}
@@ -46,7 +46,7 @@
                             <!--(!flip!=!flipAll) this is XOR operator, like t (flip^flipAll)-->
                             </br></br></br>
                             <center>
-                                <h1 style="word-wrap: break-word ">{{carouselCard.phrase}}</h1>
+                                <h1 style="word-wrap: break-word ">{{carouselCard.name}}</h1>
                             </center>
                             </br></br></br>
                         </div>
@@ -65,6 +65,19 @@
     </div>
     <!--End carousel-->
 
+    <div class="row">
+        <div class="col-md-12 col-lg-offset-3">
+            <div data-angular-treeview="true"
+                 data-tree-model="cardTree"
+                 data-tree-id="tree"
+                 data-node-id="id"
+                 data-node-label="name"
+                 data-node-children="childList">
+
+            </div>
+        </div>
+    </div>
+
     <!-- Modal ADD a Card -->
     <div class="modal fade" id="addCard" tabindex="-1" role="dialog" aria-labelledby="addCardLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -78,7 +91,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="inputPhrase">Phrase:</label>
-                            <input type="text" class="form-control" id="inputPhrase" ng-model="card.phrase">
+                            <input type="text" class="form-control" id="inputPhrase" ng-model="card.name">
                         </div>
                         <div class="form-group">
                             <label for="inputTranslate">Translate:</label>
@@ -92,7 +105,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+    </div>
     </div>
     <!-- End modal ADD a Card-->
 </div>

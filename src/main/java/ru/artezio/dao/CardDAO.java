@@ -1,6 +1,5 @@
 package ru.artezio.dao;
 
-import ru.artezio.entity.node.Card;
 import ru.artezio.entity.node.Node;
 
 import javax.transaction.Transactional;
@@ -12,8 +11,11 @@ import java.util.List;
 @Transactional
 public interface CardDAO {
     Node load(Integer id);
+
     void save(Node n);
+
     void remove(Integer id);
+
     List<Node> loadAll();
 
     /**
@@ -23,4 +25,13 @@ public interface CardDAO {
      * @return All nodes for the user
      */
     List<Node> loadAll(String login);
+
+    /**
+     * Builds a tree of nested folders and cards.
+     * List of root folders. Each element of the list list of subfolders and cards
+     *
+     * @param login a user
+     * @return A tree of nested folders and cards
+     */
+    List<Node> loadCardTreeBy(String login);
 }
