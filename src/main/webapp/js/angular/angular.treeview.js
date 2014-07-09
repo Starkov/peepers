@@ -48,7 +48,8 @@
                 var template =
                     '<ul>' +
                     '<li data-ng-repeat="node in ' + treeModel + '">' +
-                    '<i class="collapsed" data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+                    // Added  (ng-init="node.collapsed=true") for initialisation display closed are folders
+                    '<i class="collapsed"  data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
                     '<i class="expanded" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
                     '<i class="normal" data-ng-hide="node.' + nodeChildren + '.length"></i> ' +
                     '<span data-ng-class="node.selected" data-ng-click="' + treeId + '.selectNodeLabel(node)">{{node.' + nodeLabel + '}}</span>' +
@@ -79,10 +80,12 @@
                             //remove highlight from previous node
                             if (scope[treeId].currentNode && scope[treeId].currentNode.selected) {
                                 scope[treeId].currentNode.selected = undefined;
+//                                scope[treeId].currentNode.collapsed = true; // Added. This is closing previous a folder
                             }
 
                             //set highlight to selected node
                             selectedNode.selected = 'selected';
+//                            selectedNode.collapsed = !selectedNode.collapsed;//Added. This is opening selected  folder
 
                             //set currentNode
                             scope[treeId].currentNode = selectedNode;

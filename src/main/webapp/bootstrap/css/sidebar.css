@@ -1,16 +1,32 @@
 #wrapper {
     /*padding-left: 250px;*/
     transition: all 0.4s ease 0s;
-
 }
 
-#flip-bottom {
-
+#flip-button {
+    position: absolute;
+    top: 110px;
     width: 210px;
-
+    margin: 10px;
 }
 
-#sidebar-bottom {
+#add-folder-button {
+    position: absolute;
+    top: 450px;
+    width: 210px;
+    margin: 10px;
+}
+
+#tree {
+    position: absolute;
+    top: 170px;
+    width: 250px;
+    height: 280px;
+    /*margin: 10px;*/
+    overflow-y: auto;
+}
+
+#sidebar-addCard-button {
     position: absolute;
     top: 700px;
     width: 210px;
@@ -23,7 +39,6 @@
     /*width: 280px;*/
     /*background: #000;*/
     position: fixed;
-
     z-index: 1000;
     transition: all 0.4s ease 0s;
 }
@@ -34,13 +49,13 @@
 
 .sidebar-nav {
     position: absolute;
-    top: 60;
+    top: 400;
     width: 250px;
     list-style: none;
     margin: 0;
     padding-left: 10px;
     padding-right: 10px;
-    height: 630px;
+    height: 300px;
     overflow-y: auto;
 }
 

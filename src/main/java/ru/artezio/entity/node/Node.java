@@ -10,6 +10,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Node implements java.io.Serializable {
 
+    @Transient
+    private Integer parentHolderId;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "node_id")
@@ -56,5 +59,13 @@ public abstract class Node implements java.io.Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getParentHolderId() {
+        return parentHolderId;
+    }
+
+    public void setParentHolderId(Integer parentHolderId) {
+        this.parentHolderId = parentHolderId;
     }
 }

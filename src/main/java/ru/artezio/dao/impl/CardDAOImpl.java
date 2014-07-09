@@ -2,7 +2,6 @@ package ru.artezio.dao.impl;
 
 import ru.artezio.dao.CardDAO;
 import ru.artezio.entity.node.Card;
-import ru.artezio.entity.node.Node;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -17,41 +16,29 @@ public class CardDAOImpl implements CardDAO {
     private EntityManager em;
 
     @Override
-    public Node load(Integer id) {
+    public Card load(Integer id) {
         return em.find(Card.class, id);
     }
 
     @Override
-    public void save(Node c) {
-        em.persist(c);
-        em.flush();
+    public void save(Card card) {
+        em.merge(card);
     }
 
     @Override
     public void remove(Integer id) {
-        Card c = em.find(Card.class, id);
-        if (c != null) {
-            em.remove(c);
+        Card card = em.find(Card.class, id);
+        if (card != null) {
+            em.remove(card);
         }
     }
 
     @Override
-    public List<Node> loadAll() {
-        Query query = em.createQuery("SELECT c FROM Card c");
-        return (List<Node>) query.getResultList();
-    }
-
-    @Override
-    public List<Node> loadAll(String login) {
-        Query query = em.createQuery("SELECT c FROM Card c WHERE c.login = :login");
-        query.setParameter("login", login);
-        return (List<Node>) query.getResultList();
-    }
-
-    @Override
-    public List<Node> loadCardTreeBy(String login) {
-        Query query = em.createQuery("SELECT n FROM Node n WHERE n.login = :login and n.folder is null");
-        query.setParameter("login", login);
-        return (List<Node>) query.getResultList();
+    public List<Card> loadCardsByFolder(Integer id, String login) {
+        String sqlQuery = "select * from nodes where login = ? and folder_id = ? and type = 'Card'";
+        Query q = em.createNativeQuery(sqlQuery, Card.class);
+        q.setParameter(1, login);
+        q.setParameter(2, id);
+        return (List<Card>) q.getResultList();
     }
 }

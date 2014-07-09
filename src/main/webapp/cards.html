@@ -1,62 +1,23 @@
 <div ng-controller="CardCtrl">
-    <div class="col-md-3">
-        <button id="flip-bottom" class="btn btn-primary btn-lg " ng-click="flipAllCards()"> Flip</button>
-    </div>
-    <!--Sidebar-->
-    <div id="wrapper">
-        <div id="sidebar-wrapper">
 
-            <div class="sidebar-nav ">
-
-                <div ng-repeat="sidebarCard in cardList">
-                    <div>
-                        <div class="thumbnail" style="word-wrap: break-word " ng-show="!flipAll"> {{sidebarCard.name}}
-                        </div>
-                        <div class="thumbnail" style="word-wrap: break-word " ng-hide="!flipAll">
-                            {{sidebarCard.translation}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <button id="sidebar-bottom" class="btn btn-primary btn-lg " data-toggle="modal" data-target="#addCard"
-                        ng-click="initAddButton()">
-                    Add
-                </button>
-            </div>
-        </div>
-    </div>
-    <!--End sidebar-->
     <!--Carousel-->
     <div class="row">
-
-        <div class="col-md-offset-3 col-md-9">
-            <carousel>
-                <slide ng-repeat="carouselCard in cardList" active="carouselCard.active">
-                    <div class="row">
-
-                        <button class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#addCard"
-                                ng-click="edit(carouselCard)"> edit
-                        </button>
-                        <button class="glyphicon glyphicon-remove" ng-click="removeCard(carouselCard)"> remove</button>
-                    </div>
-
-                    <div ng-mouseenter="flip=!flip" ng-mouseleave="flip=!flip" class="row col-md-8 col-lg-offset-2">
+        <div class=" col-md-12">
+            <carousel style="height: 250px;" class="jumbotron">
+                <slide ng-repeat="carouselCard in cardList"
+                       active="carouselCard.active">
+                    <div ng-mouseenter="flip=!flip"
+                         ng-mouseleave="flip=!flip">
                         <div ng-show="!(!flip!=!flipAll)">
-                            <!--(!flip!=!flipAll) this is XOR operator, like t (flip^flipAll)-->
-                            </br></br></br>
+                            <!--(!flip!=!flipAll) this is XOR operator, like that (flip^flipAll)-->
                             <center>
-                                <h1 style="word-wrap: break-word ">{{carouselCard.name}}</h1>
+                                <h3 style="word-wrap: break-word;width: 700px;">{{carouselCard.name}}</h3>
                             </center>
-                            </br></br></br>
                         </div>
-
                         <div ng-hide="!(!flip!=!flipAll)">
-                            </br></br></br>
                             <center>
-                                <h1 style="word-wrap: break-word ">{{carouselCard.translation}}</h1>
+                                <h3 style="word-wrap: break-word; width: 700px;">{{carouselCard.translation}}</h3>
                             </center>
-                            </br></br></br>
                         </div>
                     </div>
                 </slide>
@@ -64,22 +25,81 @@
         </div>
     </div>
     <!--End carousel-->
+    </br>
+    <div>
+        <div class="row">
 
-    <div class="row">
-        <div class="col-md-12 col-lg-offset-3">
-            <div data-angular-treeview="true"
-                 data-tree-model="cardTree"
+            <!--Card tree-->
+            <div class="col-md-3"
+                 data-angular-treeview="true"
+                 data-tree-model="folderList"
                  data-tree-id="tree"
                  data-node-id="id"
                  data-node-label="name"
-                 data-node-children="childList">
-
+                 data-node-children="childList"
+                 style="height:400px;overflow-y: auto;">
+            </div>
+            <!--End card tree-->
+            <!--Card list-->
+            <div class="col-md-9"
+                 style="height:400px;overflow-y: auto;">
+                <div ng-repeat="sidebarCard in cardList">
+                    <div class="col-md-4 col-xs-1 ">
+                        <span class="thumbnail" style="background: #dff0d8; height: 130px"><center>
+                            {{sidebarCard.name}}
+                        </center></span>
+                    </div>
+                </div>
+            </div>
+            <!--End card list-->
+        </div>
+    </div>
+    </br>
+    <!--Button group-->
+    <div class="row">
+        <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+                <button class="btn btn-default"
+                        ng-click="flipAllCards()">
+                    Flip all cards
+                </button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-default"
+                        data-toggle="modal"
+                        data-target="#addFolder">
+                    Add folder
+                </button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-default"
+                        data-toggle="modal"
+                        data-target="#addCard"
+                        ng-click="initAddButton()">
+                    Add card
+                </button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-default"
+                        data-toggle="modal"
+                        data-target="#addCard"
+                        ng-click="edit()">
+                    Edit card
+                </button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-default"
+                        ng-click="removeCard()">
+                    Remove card
+                </button>
             </div>
         </div>
     </div>
+    <!--End button group-->
 
     <!-- Modal ADD a Card -->
-    <div class="modal fade" id="addCard" tabindex="-1" role="dialog" aria-labelledby="addCardLabel" aria-hidden="true">
+    <div class="modal fade" id="addCard" tabindex="-1" role="dialog" aria-labelledby="addCardLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form role="form">
@@ -90,22 +110,82 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="inputPhrase">Phrase:</label>
-                            <input type="text" class="form-control" id="inputPhrase" ng-model="card.name">
+                            <label for="folderForCard">Select folder:</label>
+                            <select id="folderForCard"
+                                    ng-model="parentFolderForCard"
+                                    ng-options="folder.name for folder in folderList"></select>
                         </div>
                         <div class="form-group">
-                            <label for="inputTranslate">Translate:</label>
+                            <label for="inputName">Phrase:</label>
+                            <input type="text" class="form-control" id="inputName" ng-model="card.name">
+                        </div>
+                        <div class="form-group">
+                        <label for="inputTranslate">Translate:</label>
                             <input type="text" class="form-control" id="inputTranslate" ng-model="card.translation">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="update(card)">Save
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                                ng-click="update(card,parentFolderForCard)">
+                            Save
                         </button>
                         <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                     </div>
                 </form>
             </div>
+        </div>
     </div>
-    </div>
+
     <!-- End modal ADD a Card-->
+
+    <!-- Modal ADD a Folder -->
+    <div class="modal fade" id="addFolder" tabindex="-1" role="dialog" aria-labelledby="addFolderLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form role="form">
+                    <div class="modal-header">
+
+                        <button type="button"
+                                ng-click="clear()"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-hidden="true">&times;</button>
+
+                        <h4 class="modal-title"
+                            id="addFolderLabel">Add new folder</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="parentFolder">Select folder:</label>
+                            <select id="parentFolder"
+                                    ng-model="parentFolder"
+                                    ng-options="folder.name for folder in folderList"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputFolderName">Name:</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="inputFolderName"
+                                   ng-model="newFolder.name">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button"
+                                class="btn btn-default"
+                                data-dismiss="modal"
+                                ng-click="addFolder(parentFolder,newFolder)">
+                            Save
+                        </button>
+                        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End modal ADD a Folder -->
 </div>

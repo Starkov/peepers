@@ -7,26 +7,43 @@
 
 angular.module('peepersApp').controller('CardCtrl', function ($scope, $http, $location) {
 
-
-        $http({method: 'GET', url: 'rest/cards/all'}).success(function (data) {
-            $scope.cardList = data;
+        $scope.$watch('tree.currentNode', function (newValue, oldValue) {
+            if (newValue === oldValue) {
+                return;
+            }
+            $http({method: 'GET', url: 'rest/cards/all/folder/' + newValue.id}).success(function (data) {
+                $scope.cardList = data;
+            });
         });
 
-        $http({method: 'GET', url: 'rest/cards/tree'}).success(function (data) {
-            $scope.cardTree = data;
+        $http({method: 'GET', url: 'rest/folders/all'}).success(function (data) {
+            $scope.folderList = data;
         });
 
-        $scope.update = function (card) {
+        $scope.update = function (card, parentFolderForCard) {
             if ('active' in card) {
                 delete card.active;
             }
+            card.parentHolderId = parentFolderForCard.id;
             $http({method: 'POST', url: 'rest/cards/add', data: card}).success(function (data) {
                 $location.path('/cars')
             });
         };
 
-        $scope.edit = function (editCard) {
-            $scope.card = editCard;
+        $scope.addFolder = function (parentFolder, newFolder) {
+            newFolder.parentHolderId = parentFolder.id;
+            $http({method: 'POST', url: 'rest/folders/add', data: newFolder}).success(function (data) {
+                $location.path('/cars')
+            });
+        };
+
+        $scope.edit = function () {
+            var cardList = $scope.cardList
+            for (var indx in cardList) {
+                if (cardList[indx].active) {
+                    $scope.card = cardList[indx];
+                }
+            }
         };
 
         $scope.clear = function () {
@@ -37,10 +54,15 @@ angular.module('peepersApp').controller('CardCtrl', function ($scope, $http, $lo
             delete $scope.card;
         };
 
-        $scope.removeCard = function (card) {
-            $http({method: 'DELETE', url: 'rest/cards/remove/' + card.id}).success(function (data) {
-                $location.path('/cars')
-            });
+        $scope.removeCard = function () {
+            var cardList = $scope.cardList
+            for (var card in cardList) {
+                if (cardList[card].active) {
+                    $http({method: 'DELETE', url: 'rest/cards/remove/' + cardList[card].id}).success(function (data) {
+                        $location.path('/cars')
+                    });
+                }
+            }
         };
 
         $scope.flipAllCards = function () {

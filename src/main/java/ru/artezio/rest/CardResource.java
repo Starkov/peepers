@@ -3,8 +3,9 @@ package ru.artezio.rest;
 
 import org.jboss.resteasy.annotations.providers.jaxb.json.BadgerFish;
 import ru.artezio.dao.CardDAO;
-import ru.artezio.dao.UserDAO;
+import ru.artezio.dao.FolderDAO;
 import ru.artezio.entity.node.Card;
+import ru.artezio.entity.node.Folder;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
@@ -19,42 +20,21 @@ import java.util.List;
 @Path("/cards")
 public class CardResource {
 
-
     @EJB
     private CardDAO nodeDao;
     @EJB
-    private UserDAO userDAO;
+    private FolderDAO folderDAO;
 
-    /**
-     * This method is save or update an object
-     */
     @POST
     @Path("/add")
+    @BadgerFish
     @Consumes("application/json")
     public void add(Card card) {
-        // card.setLogin("tomcat"); //todo Keep this to a user
+        card.setLogin("tomcat"); //todo Keep this to a user
+        Folder parentFolder = (Folder) folderDAO.load(card.getParentHolderId());
+        card.setFolder(parentFolder);
         nodeDao.save(card);
     }
-
-    @BadgerFish
-    @GET
-    @Path("/all")
-    @Produces("application/json")
-    public List getAll() {
-        List result = nodeDao.loadAll("tomcat");
-        return result;
-    }
-
-    @BadgerFish
-    @GET
-    @Path("/tree")
-    @Produces("application/json")
-    public List getCardTree() {
-        List result = nodeDao.loadCardTreeBy("tomcat");
-        return result;
-    }
-
-
     @GET
     @Path("/{id:\\d+}")
     @Produces("application/json")
@@ -67,5 +47,18 @@ public class CardResource {
     public void remove(@PathParam("id") Integer id) {
         nodeDao.remove(id);
     }
+
+
+    @GET
+    @Path("/all/folder/{id:\\d+}")
+    @BadgerFish
+    @Produces("application/json")
+    public List getCardsByFolder(@PathParam("id") Integer id) {
+        List result = nodeDao.loadCardsByFolder(id, "tomcat");
+        return result;
+    }
+
+
+
 
 }
