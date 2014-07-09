@@ -1,0 +1,5 @@
+div[data-tree-model] li .normal {
+    /*padding: 1px 10px;*/
+    background-image: url("img/folder-closed.png");
+    /*background-repeat: no-repeat;*/
+}
