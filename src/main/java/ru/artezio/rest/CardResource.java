@@ -32,7 +32,7 @@ public class CardResource {
     public void add(Card card) {
         card.setLogin("tomcat"); //todo Keep this to a user
         Folder parentFolder = (Folder) folderDAO.load(card.getParentHolderId());
-        card.setFolder(parentFolder);
+        card.setParentFolder(parentFolder);
         nodeDao.save(card);
     }
     @GET

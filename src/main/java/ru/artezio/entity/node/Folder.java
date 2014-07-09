@@ -1,27 +1,45 @@
 package ru.artezio.entity.node;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.LinkedList;
 import java.util.List;
 
 @Entity
 public class Folder extends Node implements java.io.Serializable {
 
+    @ManyToOne
+    @JoinColumn(name = "folder_id")
+    private Folder folder;
 
     @OneToMany(mappedBy = "folder", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Node> childList = new LinkedList<Node>();
+    private List<Folder> childFolderList = new LinkedList<Folder>();
 
+    @OneToMany(mappedBy = "parentFolder", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Card> childCardList = new LinkedList<Card>();
 
-    public List<Node> getChildList() {
-        return childList;
+    public List<Folder> getChildFolderList() {
+        return childFolderList;
     }
 
-    public void setChildList(List<Node> childList) {
-        this.childList = childList;
+    public void setChildFolderList(List<Folder> childList) {
+        this.childFolderList = childList;
     }
 
+    @XmlTransient
+    public Folder getFolder() {
+        return folder;
+    }
 
+    public void setFolder(Folder folder) {
+        this.folder = folder;
+    }
+
+    public List<Card> getChildCardList() {
+        return childCardList;
+    }
+
+    public void setChildCardList(List<Card> childCardList) {
+        this.childCardList = childCardList;
+    }
 }

@@ -1,13 +1,15 @@
 package ru.artezio.entity.node;
 
 
+import org.hibernate.annotations.DiscriminatorOptions;
+
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "nodes")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorOptions(force = true)
 public abstract class Node implements java.io.Serializable {
 
     @Transient
@@ -24,9 +26,6 @@ public abstract class Node implements java.io.Serializable {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "folder_id")
-    private Folder folder;
 
     public Integer getId() {
         return id;
@@ -34,15 +33,6 @@ public abstract class Node implements java.io.Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    @XmlTransient
-    public Folder getFolder() {
-        return folder;
-    }
-
-    public void setFolder(Folder folder) {
-        this.folder = folder;
     }
 
     public String getLogin() {
