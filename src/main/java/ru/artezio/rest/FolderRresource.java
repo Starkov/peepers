@@ -23,8 +23,12 @@ public class FolderRresource {
     @BadgerFish
     @Consumes("application/json")
     public void add(Folder folder) {
-        Folder parentFolder = (Folder) folderDAO.load(folder.getParentHolderId());
-        folder.setFolder(parentFolder);
+        folder.setLogin("tomcat"); //todo Keep this to a user
+        Integer parentId = folder.getParentHolderId();
+        if (parentId != null) {
+            Folder parentFolder = (Folder) folderDAO.load(parentId);
+            folder.setFolder(parentFolder);
+        }
         folderDAO.save(folder);
     }
 
@@ -39,6 +43,15 @@ public class FolderRresource {
     @Path("/remove/{id:\\d+}")
     public void remove(@PathParam("id") Integer id) {
         folderDAO.remove(id);
+    }
+
+    @GET
+    @Path("/root-folders")
+    @BadgerFish
+    @Produces("application/json")
+    public List getRootFolders() {
+        List result = folderDAO.loadRootFoldersBy("tomcat");
+        return result;
     }
 
     @GET

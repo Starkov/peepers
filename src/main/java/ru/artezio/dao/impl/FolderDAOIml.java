@@ -33,8 +33,15 @@ public class FolderDAOIml implements FolderDAO {
     }
 
     @Override
-    public List<Folder> loadFoldersBy(String login) {
+    public List<Folder> loadRootFoldersBy(String login) {
         Query query = em.createQuery("SELECT e FROM Folder e WHERE e.login = :login and e.folder is null");
+        query.setParameter("login", login);
+        return (List<Folder>) query.getResultList();
+    }
+
+    @Override
+    public List<Folder> loadFoldersBy(String login) {
+        Query query = em.createQuery("SELECT e FROM Folder e WHERE e.login = :login");
         query.setParameter("login", login);
         return (List<Folder>) query.getResultList();
     }

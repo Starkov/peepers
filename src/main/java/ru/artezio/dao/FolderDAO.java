@@ -31,6 +31,14 @@ public interface FolderDAO {
     void remove(Integer id);
 
     /**
+     * Thi is load a list root folders by the user
+     *
+     * @param login the user
+     * @return list folders by the user
+     */
+    List<Folder> loadRootFoldersBy(String login);
+
+    /**
      * Thi is load a list folders by the user
      *
      * @param login the user
