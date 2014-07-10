@@ -10,6 +10,7 @@ angular.module('peepersApp').controller('CardCtrl', function ($scope, $http, $lo
 
     $http({method: 'GET', url: 'rest/folders/root-folders'}).success(function (data) {
         $scope.rootFolderList = data;
+        $scope.cardList = data[0].childCardList;
     });
 
     $http({method: 'GET', url: 'rest/folders/all'}).success(function (data) {
